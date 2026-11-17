@@ -1,0 +1,20 @@
+﻿ĐẾM NGƯỢC TẾT — CÀI ĐẶT TRÊN WINDOWS
+
+1. Nếu widget cũ đang chạy, bấm chuột phải lên số rồi chọn Thoát.
+2. Giải nén toàn bộ ZIP. Mở thư mục DemNguocTet-CaiDat-v3.
+3. Bấm đúp Cai-Dat.vbs. Nếu Windows ẩn đuôi tệp thì tên là Cai-Dat,
+   với loại tệp VBScript Script File.
+4. Sau khi cài, mở lối tắt DemNguocTet từ Desktop hoặc menu Start.
+   Nếu Windows không tạo được lối tắt, nhấn Windows + R, nhập đường dẫn
+   %LOCALAPPDATA%\DemNguocTet\DemNguocTet.exe rồi nhấn Enter.
+
+Bước cài tạo ứng dụng bằng trình biên dịch .NET Framework có sẵn trên
+Windows, lưu ứng dụng vào %LOCALAPPDATA%\DemNguocTet và tạo lối tắt
+cho tài khoản hiện tại. Bước cài không cần quyền quản trị hay Internet.
+
+Nếu Windows Script Host không khả dụng, dùng Cai-Dat-Du-Phong.cmd.
+Tệp dự phòng hiện cửa sổ lệnh trong lúc cài một lần. Khi mở widget từ
+biểu tượng Desktop thì không có terminal.
+
+Bấm nút ghim để khóa vị trí. Bấm chuột phải lên số để xem lịch 2026–2035
+hoặc chọn ghim vào góc màn hình.

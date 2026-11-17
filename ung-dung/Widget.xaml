@@ -1,0 +1,110 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đếm ngược ngày lễ"
+        Width="64" Height="64" WindowStyle="None" ResizeMode="NoResize"
+        AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" Topmost="True" UseLayoutRounding="True"
+        WindowStartupLocation="Manual" FontFamily="Segoe UI">
+  <Window.Resources>
+    <SolidColorBrush x:Key="CardBrush" Color="#621F2B"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#B65C53"/>
+    <SolidColorBrush x:Key="PickerBrush" Color="#812F3B"/>
+    <SolidColorBrush x:Key="PickerHoverBrush" Color="#9C3E48"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#FFE2A8"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#FFF1E2"/>
+  </Window.Resources>
+  <Border CornerRadius="11" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource CardBrush}">
+    <Grid Margin="4,3,4,3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="17"/>
+        <RowDefinition Height="27"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <ComboBox x:Name="HolidayPicker" AutomationProperties.Name="Chọn ngày lễ"
+                Grid.Row="0" Margin="0,0,16,0" FontSize="10" MaxDropDownHeight="220">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Margin="4,3">
+              <TextBlock Text="{Binding Label}" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding Region}" Foreground="#585052" FontSize="9"/>
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+        <ComboBox.Template>
+          <ControlTemplate TargetType="{x:Type ComboBox}">
+            <Grid>
+              <ToggleButton x:Name="PickerButton" Focusable="False" ClickMode="Press"
+                            IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                <ToggleButton.Template>
+                  <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="PickerFace" CornerRadius="5" Background="{DynamicResource PickerBrush}"
+                            BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}">
+                      <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="PickerFace" Property="Background" Value="{DynamicResource PickerHoverBrush}"/>
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </ToggleButton.Template>
+                <Grid Margin="3,0,3,0">
+                  <TextBlock Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"
+                             MaxWidth="29" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding SelectedItem.Short, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"/>
+                  <Path Width="5" Height="3" Stretch="Fill" Data="M 0,0 L 3,3 L 6,0 Z"
+                        Fill="{DynamicResource AccentBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+              </ToggleButton>
+              <Popup x:Name="PART_Popup" Placement="Bottom"
+                     PlacementTarget="{Binding ElementName=PickerButton}"
+                     IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                <Border Background="#FFFAF3" BorderBrush="#975354" BorderThickness="1" Width="272">
+                  <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                VerticalScrollBarVisibility="Auto">
+                    <ItemsPresenter x:Name="ItemsPresenter"
+                                    KeyboardNavigation.DirectionalNavigation="Contained"/>
+                  </ScrollViewer>
+                </Border>
+              </Popup>
+            </Grid>
+          </ControlTemplate>
+        </ComboBox.Template>
+      </ComboBox>
+      <ToggleButton x:Name="PinButton" Grid.Row="0" HorizontalAlignment="Right"
+                    Width="14" AutomationProperties.Name="Ghim vị trí">
+        <ToggleButton.Template>
+          <ControlTemplate TargetType="{x:Type ToggleButton}">
+            <Border x:Name="PinFace" Background="{DynamicResource PickerBrush}"
+                    CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}">
+              <Path x:Name="PinIcon" Data="M 2,0 L 8,0 L 7,2 L 7,4 L 9,6 L 6,6 L 5,10 L 4,6 L 1,6 L 3,4 L 3,2 Z"
+                    Fill="{DynamicResource AccentBrush}" Width="8" Height="9" Stretch="Fill"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PinFace" Property="Background" Value="{DynamicResource PickerHoverBrush}"/>
+              </Trigger>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="PinFace" Property="Background" Value="{DynamicResource AccentBrush}"/>
+                <Setter TargetName="PinIcon" Property="Fill" Value="{DynamicResource CardBrush}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </ToggleButton.Template>
+      </ToggleButton>
+      <Border x:Name="DragArea" Grid.Row="1" Grid.RowSpan="2" Background="Transparent"
+              Cursor="SizeAll">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="27"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <TextBlock x:Name="DayCount" Grid.Row="0" FontSize="24" FontWeight="SemiBold"
+                     Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <TextBlock x:Name="DayLabel" Grid.Row="1" FontSize="8" Foreground="{DynamicResource TextBrush}"
+                     HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Window>
